@@ -63,7 +63,7 @@ Out of the six samples that we sequenced, three (one from each source) were foun
 
 # Data Availability:
 
-Assemblies and annotations for each of our three samples are available from GenBank with the accession number (will be inserted when available). Assemblies and annotations for each of the three other contaminated samples are also available under the same accession.
+Assemblies and annotations for each of our three samples are available from GenBank with the accession number (will be inserted when available). Assemblies and annotations for each of the three other contaminated samples are also available under the same accession. An rmarkdown script used to analyze the assemblies and produce this manuscript is also available at https://github.com/hemstrow/BIS23_manuscript_2022.
 
 # References:
 <div id="refs"></div>
