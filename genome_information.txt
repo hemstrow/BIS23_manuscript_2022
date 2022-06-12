@@ -1,0 +1,7 @@
+sample_name	assembly_method	assembly_method_version	genome_coverage	sequencing_technology	filename
+231231_1EQCKT	SPAdes	3.7	20.8024	Illumina	231231_1EQCKT_clean.fasta
+231232_2ArWaCKT	SPAdes	3.7	21.021	Illumina	231232_2ArWaCKT_clean.fasta
+231235_5AlVlsaltlick	SPAdes	3.7	83.89	Illumina	231235_5AlVlsaltlick_clean.fasta
+231236_6EMJA	SPAdes	3.7	41.8144	Illumina	231236_6EMJA_clean.fasta
+231237_7MaSpsaltlick	SPAdes	3.7	62.1026	Illumina	231237_7MaSpsaltlick_clean.fasta
+231240_10ClHs	SPAdes	3.7	48.7816	Illumina	231240_10ClHs_clean.fasta

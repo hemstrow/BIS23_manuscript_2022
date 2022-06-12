@@ -1,0 +1,7 @@
+sample_name	organism	strain	isolation_source	collection_date	geo_loc_name	sample_type	description	contamination
+231231_1EQCKT	Halomonas bacterium 	SFT1	Saltwater Fish Tank	Oct-2021	USA: California, Davis	cell culture	Cultured at 200g/L NaCl	yes, via to ContEst16S
+231232_2ArWaCKT	Halomonas bacterium 	SFT2	Saltwater Fish Tank	Oct-2021	USA: California, Davis	cell culture	Cultured at 200g/L NaCl	no, via to ContEst16S
+231235_5AlVlsaltlick	Staphylococcus bacterium 	CSL1	Cow Salt Lick	Oct-2021	USA: California, Davis	cell culture	Cultured at 200g/L NaCl	uncertain, via to ContEst16S
+231236_6EMJA	Staphylococcus bacterium 	CSL2	Cow Salt Lick	Oct-2021	USA: California, Davis	cell culture	Cultured at 200g/L NaCl	yes, via to ContEst16S
+231237_7MaSpsaltlick	Staphylococcus bacterium 	CSL3	Cow Salt Lick	Oct-2021	USA: California, Davis	cell culture	Cultured at 200g/L NaCl	no, via to ContEst16S
+231240_10ClHs	Bacillus bacterium 	AS1	Arboretum Soil	Oct-2021	USA: California, Davis	cell culture	Cultured at 200g/L NaCl	no, via to ContEst16S

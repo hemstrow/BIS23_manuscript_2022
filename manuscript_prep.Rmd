@@ -1,5 +1,5 @@
 ---
-title: "Draft Genome Assemblies of Three Highly Salt-tolerant Bacteria"
+title: "Draft Genome Assemblies of Three Halophilic Bacteria From Soil, Salt Lick, and a Fish Tank"
 date: "`r format(Sys.time(), '%d %B %Y')`"
 output:
   word_document:
@@ -35,15 +35,15 @@ library(kableExtra)
 
 # Abstract:
 
-Halophiles represent an industrially important but still understudied group of organisms. Here, we present a draft genome sequence of three different salt tolerant bacterial strains, which were isolated from a range of sources, raised under high salinities, sequenced, and analyzed at the University of California, Davis.
+Halophiles represent an industrially important but still understudied group of organisms. Here, we present a draft genome sequence of three different salt tolerant bacterial strains from the genera Halomonas, Bacillus, and Staphylococcus. These organisms were isolated from soil, a cow salt lick, and a fish tank, and then cultured at 200 g/L NaCl, sequenced, and assembled into draft genome assemblies.
 
 # Background:
 
-Halophiles have been identified as significant sources of stable enzymes that work in extremely high salinity and have a broad range of biotechnological applications [@Liu2019]. There is therefore a pressing need to expand the currently limited genome database of halophilic microorganisms. In response, undergraduate students at the University of California, Davis cultured 3 environmental samples and isolated DNA sequences, and identified three different salt tolerant strains from our assembled draft genomes. Our work can be utilized in studying halophilic mechanisms by providing a broader scope of genomes for future reference [@Becker2014].
+Halophiles have been identified as significant sources of stable enzymes that work in extremely high salinity and have a broad range of biotechnological applications [@Liu2019]. There is therefore a pressing need to expand the currently limited genome database of halophilic microorganisms. To help address this need, we cultured three environmental samples and isolated DNA sequences as part of a Course-based Undergraduate Research Experience (CURE). From these, we identified three different salt tolerant strains from our assembled draft genomes. Our work can be utilized in studying halophilic mechanisms by providing a broader scope of genomes for future reference [@Becker2014].
 
 # Methods:
 ## Specimen Collection and Culturing
-In order to search for halophilic microbes, we collected 17 samples from a range of environments from around Davis, California. After one week of incubation at 37°C, three samples successfully resulted in bacterial growth in high salt growth medium (200 g/L NaCL). These samples were sourced from: 1) soil from the Davis Arboretum, 2) a cow salt lick, and 3) the remains of evaporated water on the glass top of a salt water fish tank containing a single rabbitfish (*Siganus Guttatas*) held at room temperature (~72) under ambient light. To isolate single colonies, we streaked each liquid sample onto high salt agar plates (200g/L NaCl). Plates were incubated for 5-6 days at 37°C. We then picked single colonies from each sample and cultured them in growth medium for one week at 37°C. Samples where then pelleted and DNA was extracted. For liquid culture, Halobacterium 372 was used. Agar was added to this media to make cacterial growth plates. The soil sample was streaked once, the salt lick sample three times, and the tank sample twice, for a total of six samples.
+In order to search for halophilic microbes, we collected 17 samples from a range of environments from around Davis, California, USA. After one week of incubation at 37°C, three samples successfully resulted in bacterial growth in high salt growth medium (200 g/L NaCL). These samples were sourced from: 1) soil from the Davis Arboretum, 2) a cow salt lick, and 3) the remains of evaporated water on the glass top of a salt water fish tank containing a single rabbitfish (*Siganus Guttatas*) held at room temperature (~72) under ambient light. To isolate single colonies, we streaked each liquid sample onto high salt agar plates (200g/L NaCl). Plates were incubated for 5-6 days at 37°C. We then picked single colonies from each sample and cultured them in growth medium for one week at 37°C. Samples where then pelleted and DNA was extracted. For liquid culture, Halobacterium 372 was used. Agar was added to this media to make cacterial growth plates. The soil sample was streaked once, the salt lick sample three times, and the tank sample twice, for a total of six samples.
 
 ## Genomic DNA Purification
 We purified Genomic DNA from each sample for which we were successfully able to culture colonies using a using the Monarch DNA extraction kit (New England Biolabs) according to their quick protocol. The sample was pelleted and lysed with phosphate buffered saline, lysosomes, tissue lysis buffer, proteinase and RNAase. DNA was then purified using gDNA binding buffer, a gDNA Purification column elution buffer and wash buffer. To prepare the samples for sequencing, DNA was further purified via ethanol precipitation. The DNA was then analyzed and assembled by MicrobesNG (see https://microbesng.com/documents/5/MicrobesNG_Methods_Document_-_PDF.pdf for details). Briefly, each sample was lysed, purified, and the sequenced on an Illumina sequencer using 250bp paired-end reads. The resulting reads were trimmed via Trimmomatic 0.30 [@Bolger2014], assembled via SPAdes 3.7 [@Bankevich2012], and annotated using Prokka 1.11 [@Seemann2014].
@@ -132,5 +132,43 @@ stats <- cbind(`Sample ID` = selected_samples$`Statistics without reference`,
 flextable::regulartable(stats) %>% flextable::set_caption(., "Total assembled genome size with all contigs and only including contigs larger than 500bp, N50, L50, and % GC for each sample. N50, L50, and % GC are reported for the assembly without contigs smaller than 500bp.")
 
 # kableExtra::landscape(kable(x = stats, format = "latex", linesep ="\\addlinespace", caption = c("Table 1: Total assembled genome size with all contigs and only including contigs larger than 500bp, N50, L50, and % GC for each sample. N50, L50, and % GC are reported for the assembly without contigs smaller than 500bp.")) %>% kable_styling(., latex_options = "scale_down")) #https://haozhu233.github.io/kableExtra/best_practice_for_newline_in_latex_table.pdf
+```
+```{r, trim_for_ncbi}
+meta$file <- paste0(meta$`Statistics without reference`, ".fasta")
+for(i in 1:nrow(meta)){
+  this_assembly <- readDNAStringSet(meta$file[i])
+  this_assembly <- this_assembly[which(width(this_assembly) >= 200)]
+  writeXStringSet(this_assembly, paste0(meta$`Statistics without reference`[i], "_clean.fasta"))
+}
+
+```
+
+
+```{r, ncbi}
+meta$origin_code <- c("SFT", "SFT", "CSL", "CSL", "CSL", "AS")
+meta$strain_name <- paste0(meta$origin_code, c(1, 2, 1, 2, 3, 1))
+biosample <- data.frame(sample_name = meta$`Statistics without reference`,
+                        organism = paste0(meta$`Most Frequent Genus`, " bacterium "),
+                        strain = meta$strain_name,
+                        isolation_source = meta$Origins,
+                        collection_date = "Oct-2021",
+                        geo_loc_name = "USA: California, Davis",
+                        sample_type = "cell culture",
+                        description = "Cultured at 200g/L NaCl",
+                        contamination = paste0(gsub("maybe", "uncertain", meta$`ContEst16S Decision`), ", via to ContEst16S")
+                        )
+
+write.table(biosample, "biosample.txt", quote = FALSE, sep = "\t", col.names = TRUE, row.names = FALSE)
+
+genome_information <- data.frame(sample_name = biosample$sample_name,
+                                 assembly_method = "SPAdes", 
+                                 assembly_method_version = "3.7",
+                                 genome_coverage = meta$`Mean Coverage`,
+                                 sequencing_technology = "Illumina",
+                                 filename = paste0(meta$`Statistics without reference`, "_clean.fasta"))
+write.table(genome_information, "genome_information.txt", quote = FALSE, sep = "\t", col.names = TRUE, row.names = FALSE)
+
+
+
 ```
 
