@@ -63,7 +63,7 @@ Each of our three uncontaminated samples was found to be similar to previously s
 
 # Data Availability:
 
-Assemblies and annotations from all six (contaminated and uncontaminated) samples are available from GenBank with the accession number (will be inserted when available). An rmarkdown script used to analyze the assemblies and produce this manuscript is also available at https://github.com/hemstrow/BIS23_manuscript_2022.
+Assemblies and annotations from all six (contaminated and uncontaminated) samples are available from GenBank with the accession number (will be inserted when available). The rmarkdown script used to analyze the assemblies and produce this manuscript is also available at https://github.com/hemstrow/BIS23_manuscript_2022.
 
 # References:
 <div id="refs"></div>
@@ -122,7 +122,6 @@ stats <- cbind(`Sample ID` = selected_samples$`Statistics without reference`,
                `Sample Origin` = selected_samples$`Origins`,
                `Top 16S BLASTn Hit` = selected_samples$`Top Blast Hit`,
                `BLASTn % Identity` = selected_samples$`Percent Identity`,
-               `Accession Number` = selected_samples$Accession,
                dplyr::bind_rows(lapply(fastas, calc_stats)))
 
 ```
