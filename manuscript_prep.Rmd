@@ -43,14 +43,14 @@ Halophiles have been identified as significant sources of stable enzymes that wo
 
 # Methods:
 ## Specimen Collection and Culturing
-In order to search for halophilic microbes, we collected 17 samples from a range of environments from around Davis, California, USA. After one week of incubation at 37°C, three samples successfully resulted in bacterial growth in high salt growth medium (200 g/L NaCL). These samples were sourced from: 1) soil from the Davis Arboretum, 2) a cow salt lick, and 3) the remains of evaporated water on the glass top of a salt water fish tank containing a single rabbitfish (*Siganus Guttatas*) held at room temperature (~72) under ambient light. To isolate single colonies, we streaked each liquid sample onto high salt agar plates (200g/L NaCl). Plates were incubated for 5-6 days at 37°C. We then picked single colonies from each sample and cultured them in growth medium for one week at 37°C. Samples where then pelleted and DNA was extracted. For liquid culture, Halobacterium 372 was used. Agar was added to this media to make cacterial growth plates. The soil sample was streaked once, the salt lick sample three times, and the tank sample twice, for a total of six samples.
+In order to search for halophilic microbes, we collected 17 samples from a range of environments from around Davis, California, USA. After one week of incubation at 37°C, three samples successfully resulted in bacterial growth in high salt growth medium (200 g/L NaCL). These three samples were sourced in late September or early October 2021 from: 1) soil from the Davis Arboretum, 2) a cow salt lick, and 3) the remains of evaporated water on the glass top of a saltwater fish tank containing a single rabbitfish (*Siganus Guttatas*) held at room temperature (~22°C) under ambient light. To isolate single colonies, we streaked each liquid sample onto high salt agar plates (200g/L NaCl). Plates were incubated for 5-6 days at 37°C. We then picked single colonies from each sample and cultured them in growth medium for one week at 37°C. Samples where then pelleted and DNA was extracted. For liquid culture, Halobacterium 372 (https://www.dsmz.de/microorganisms/medium/pdf/DSMZ_Medium372.pdf) was used. Agar was added to this media to make cacterial growth plates. The soil sample was streaked once, the salt lick sample three times, and the tank sample twice, for a total of six samples.
 
-## Genomic DNA Purification
-We purified Genomic DNA from each sample for which we were successfully able to culture colonies using a using the Monarch DNA extraction kit (New England Biolabs) according to their quick protocol. The sample was pelleted and lysed with phosphate buffered saline, lysosomes, tissue lysis buffer, proteinase and RNAase. DNA was then purified using gDNA binding buffer, a gDNA Purification column elution buffer and wash buffer. To prepare the samples for sequencing, DNA was further purified via ethanol precipitation. The DNA was then analyzed and assembled by MicrobesNG (see https://microbesng.com/documents/5/MicrobesNG_Methods_Document_-_PDF.pdf for details). Briefly, each sample was lysed, purified, and the sequenced on an Illumina sequencer using 250bp paired-end reads. The resulting reads were trimmed via Trimmomatic 0.30 [@Bolger2014], assembled via SPAdes 3.7 [@Bankevich2012], and annotated using Prokka 1.11 [@Seemann2014].
+## Genomic DNA Purification, Sequencing, and Bioinformatics
+We purified Genomic DNA from each successfully cultured sample using the Monarch DNA extraction kit (New England Biolabs) according to their Quick Protocol. The sample was pelleted and lysed with phosphate buffered saline, lysosomes, tissue lysis buffer, proteinase, and RNAase. DNA was then purified using gDNA binding buffer, a gDNA Purification column elution buffer and wash buffer. To prepare the samples for sequencing, DNA was further purified via ethanol precipitation. DNA sequencing and bioinformatics analysis was performed by MicrobesNG (https://microbesng.com/, see https://microbesng.com/documents/5/MicrobesNG_Methods_Document_-_PDF.pdf for details). Briefly, each sample was lysed, purified, and the sequenced on an Illumina sequencer using 250bp paired-end reads. The resulting reads were trimmed via Trimmomatic 0.30 [@Bolger2014], assembled via SPAdes 3.7 [@Bankevich2012], and annotated using Prokka 1.11 [@Seemann2014].
 
 
 ## Genome Assembly and Quality Assessment
-We cleaned and assessed the sequence produced by MicrobesNG data using the BioStrings R package by filtering out any contigs that were shorter than 500 bp, then calculated the number of contigs, length of each contig, total genome size, N50, and L50 values, and GC content [@Pages2019]. We used the ContEst16S tool to compare our assembled genomes against known 16S rRNA sequences [@Lee2017]. We considered samples as contaminated if the results returned more than one 16S match. We ran the largest 16S sequences obtained by the ContEst16S tool through the NCBI’s online BLASTn (Nucleotide Basic Local Alignment Search Tool) tool to search for potential organisms with matching sequences [@Altschul1990a]. 
+We first used the ContEst16S tool assess contamination in our samples by comparison against known 16S rRNA sequences [@Lee2017]. We considered samples contaminated if the results returned more than one 16S match. Three out of our six samples had contamination and were not further analyzed. We then cleaned and assessed the remaining sequences using the BioStrings R package by filtering out any contigs that were shorter than 500 bp, and then calculated the number of contigs, length of each contig, total genome size, N50, and L50 values, and GC content for the resulting final assemblies [@Pages2019]. To determine the possible species identification for each sample, we then ran the largest 16S sequences obtained by the ContEst16S tool through the NCBI’s online BLASTn (Nucleotide Basic Local Alignment Search Tool) tool [@Altschul1990a]. 
 
 <!-- To further assess each genome’s completeness and degree of contamination, we also used the KBase CheckM tool to search for single-copy marker genes (Parks et al. 2015; Arkin et al. 2016). -->
 
@@ -59,11 +59,11 @@ We cleaned and assessed the sequence produced by MicrobesNG data using the BioSt
 
 # Results:
 
-Out of the six samples that we sequenced, three (one from each source) were found to be uncontaminated by ContEst16S. Each of these samples was found to be similar to previously sequenced samples from a distinct genus, each with very high (>99) percent identity; one *Halomonas* species (the fish tank), one *Bacillus* species (the Arboretum soil), and one *Staphylococcus* species (the salt lick; see Table 1). Interestingly, while the tank sample best matched a known halophilic genus (*Halomonas*), the other two did not. However, the *second* best BLAST hit for the soil sample was from a halophilic genus (*Salibacterium*), with a similarly high percent identity (99.73), suggesting that this sample may actually also belong to a known halophilic genus. The cow lick sample shared a percent identity of 100 with many (20+) *Staphlocaccus* samples.
+Each of our three uncontaminated samples was found to be similar to previously sequenced samples from a distinct genus, each with very high percent identity (>99%); one to a sample from a known halophilic *Halomonas* species (the fish tank), one to an unidentified *Bacillus* species (the Arboretum soil), and one equally well to many (20+) *Staphylococcus* species (the salt lick; see Table 1).
 
 # Data Availability:
 
-Assemblies and annotations for each of our three samples are available from GenBank with the accession number (will be inserted when available). Assemblies and annotations for each of the three other contaminated samples are also available under the same accession. An rmarkdown script used to analyze the assemblies and produce this manuscript is also available at https://github.com/hemstrow/BIS23_manuscript_2022.
+Assemblies and annotations from all six (contaminated and uncontaminated) samples are available from GenBank with the accession number (will be inserted when available). An rmarkdown script used to analyze the assemblies and produce this manuscript is also available at https://github.com/hemstrow/BIS23_manuscript_2022.
 
 # References:
 <div id="refs"></div>
@@ -122,6 +122,7 @@ stats <- cbind(`Sample ID` = selected_samples$`Statistics without reference`,
                `Sample Origin` = selected_samples$`Origins`,
                `Top 16S BLASTn Hit` = selected_samples$`Top Blast Hit`,
                `BLASTn % Identity` = selected_samples$`Percent Identity`,
+               `Accession Number` = selected_samples$Accession,
                dplyr::bind_rows(lapply(fastas, calc_stats)))
 
 ```
@@ -129,7 +130,7 @@ stats <- cbind(`Sample ID` = selected_samples$`Statistics without reference`,
 
 ```{r, table1, include=TRUE}
 
-flextable::regulartable(stats) %>% flextable::set_caption(., "Total assembled genome size with all contigs and only including contigs larger than 500bp, N50, L50, and % GC for each sample. N50, L50, and % GC are reported for the assembly without contigs smaller than 500bp.")
+flextable::regulartable(stats) %>% flextable::set_caption(., "Sample origin, top 16S BLASTn hit, percent identity, and accession number, total assembled genome size with all contigs, total assembled size only only including contigs larger than 500bp, N50, L50, and % GC for each sample. N50, L50, and % GC are reported for the assembly without contigs smaller than 500bp.")
 
 # kableExtra::landscape(kable(x = stats, format = "latex", linesep ="\\addlinespace", caption = c("Table 1: Total assembled genome size with all contigs and only including contigs larger than 500bp, N50, L50, and % GC for each sample. N50, L50, and % GC are reported for the assembly without contigs smaller than 500bp.")) %>% kable_styling(., latex_options = "scale_down")) #https://haozhu233.github.io/kableExtra/best_practice_for_newline_in_latex_table.pdf
 ```
@@ -151,7 +152,7 @@ biosample <- data.frame(sample_name = meta$`Statistics without reference`,
                         organism = paste0(meta$`Most Frequent Genus`, " bacterium "),
                         strain = meta$strain_name,
                         isolation_source = meta$Origins,
-                        collection_date = "Oct-2021",
+                        collection_date = meta$`Collection Date`,
                         geo_loc_name = "USA: California, Davis",
                         sample_type = "cell culture",
                         description = "Cultured at 200g/L NaCl",
